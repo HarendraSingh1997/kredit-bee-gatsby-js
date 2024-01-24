@@ -1,5 +1,7 @@
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
+import { StaticImage } from 'gatsby-plugin-image';
+import { Link, useStaticQuery, graphql } from 'gatsby'
 
 const pageStyles = {
   color: "#232129",
@@ -137,11 +139,26 @@ const links = [
 ]
 
 const IndexPage: React.FC<PageProps> = () => {
+
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `)
+
   return (
     <main style={pageStyles}>
       <h1 style={headingStyles}>
         Congratulations Welcome to the KreditBee
         <br />
+        <StaticImage
+        alt="Clifford, a reddish-brown pitbull, posing on a couch and looking stoically at the camera"
+        src="https://images.unsplash.com/photo-1705943639982-4771862a4a63?q=80&w=3333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+      />
         <span style={headingAccentStyles}>— you just made a Gatsby site! 🎉🎉🎉</span>
       </h1>
       <p style={paragraphStyles}>
@@ -160,6 +177,7 @@ const IndexPage: React.FC<PageProps> = () => {
           </li>
         ))}
       </ul>
+      {JSON.stringify(data)}
       <ul style={listStyles}>
         {links.map(link => (
           <li key={link.url} style={{ ...listItemStyles, color: link.color }}>
